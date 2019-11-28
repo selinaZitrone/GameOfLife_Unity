@@ -23,12 +23,14 @@ public class Vitrus_Genenator_2 : MonoBehaviour
     int[,] matrix_2;
     int[,] toRender;
 
+    // definiert welche matrix zur Updatefunktion als Referenz und welche als Output weitergegeben wird
+    bool actualMatrix = true;
+
     // Start is called before the first frame update
     void Start()
     {
         PrepareRenderer();
-        PrepareMatrixes();
-        timer = refreshTime;
+        Restart();
         //matrix_1 = new int[,] { {1 , 0 }, {0 , 1 } };
         //matrix_2 = matrix_1;
         //ChangeArray(matrix_2);
@@ -96,8 +98,6 @@ public class Vitrus_Genenator_2 : MonoBehaviour
         }
     }
 
-    bool actualMatrix = true;
-
     private void PlayRound()
     {
         if (actualMatrix)
@@ -111,6 +111,7 @@ public class Vitrus_Genenator_2 : MonoBehaviour
             // funzione con matrix 2
             toRender = matrix_1;
         }
+
         actualMatrix = !actualMatrix;
     }
 
