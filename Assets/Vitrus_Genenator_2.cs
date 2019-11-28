@@ -37,6 +37,13 @@ public class Vitrus_Genenator_2 : MonoBehaviour
 
     }
 
+    public void Restart()
+    {
+        PrepareMatrixes();
+        timer = refreshTime;
+        actualMatrix = true;
+    }
+
     //private void ChangeArray(int[,] toChange)
     //{
     //    toChange[0, 0] = 0;
@@ -83,26 +90,26 @@ public class Vitrus_Genenator_2 : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer < 0)
         {
-            PlayRound();
             SetRenderOutput();
+            PlayRound();
             timer = refreshTime;
         }
     }
 
-    bool actualMatrix = false;
+    bool actualMatrix = true;
 
     private void PlayRound()
     {
         if (actualMatrix)
         {
-            FakeGame(matrix_1, matrix_2);
+            GameOfLife.UpdateCellStatus(matrix_1, matrix_2);
             // funzione con matrix 1
-            toRender = matrix_1;
+            toRender = matrix_2;
         } else
         {
-            FakeGame(matrix_2, matrix_1);
+            GameOfLife.UpdateCellStatus(matrix_2, matrix_1);
             // funzione con matrix 2
-            toRender = matrix_2;
+            toRender = matrix_1;
         }
         actualMatrix = !actualMatrix;
     }
