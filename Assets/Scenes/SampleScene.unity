@@ -149,9 +149,9 @@ MonoBehaviour:
   - {r: 0.054957304, g: 0.19466324, b: 0.8962264, a: 1}
   - {r: 0.97404873, g: 1, b: 0, a: 1}
   - {r: 0.23113209, g: 1, b: 0.9356973, a: 1}
-  matrixSize: 100
-  cellSize: 10
-  refreshTime: 0.5
+  matrixSize: 200
+  cellSize: 5
+  refreshTime: 0.001
 --- !u!4 &100630948
 Transform:
   m_ObjectHideFlags: 0
