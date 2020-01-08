@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Vitrus_Genenator_2 : MonoBehaviour
 {
@@ -26,24 +28,46 @@ public class Vitrus_Genenator_2 : MonoBehaviour
     // definiert welche matrix zur Updatefunktion als Referenz und welche als Output weitergegeben wird
     bool actualMatrix = true;
 
+    // check if game is running and if game has started
+    bool isRunning = false;
+
+
+    public Slider matrixDimSlide;
+    public TMP_Text matrixDimSlideValue;
+    public Slider simulationSpeedSlider;
+    public TMP_Text simulationSpeedSlideValue;
+
     // Start is called before the first frame update
     void Start()
     {
-        PrepareRenderer();
-        Restart();
-        //matrix_1 = new int[,] { {1 , 0 }, {0 , 1 } };
-        //matrix_2 = matrix_1;
-        //ChangeArray(matrix_2);
-        //Debug.Log(matrix_1[0, 0]);
-
+        //set default values of slider
+        matrixDimSlide.value = 50;
+        simulationSpeedSlider.value = 50;
+        
 
     }
 
-    public void Restart()
+    public void StartGame()
     {
-        PrepareMatrixes();
+        matrixSize = (int)matrixDimSlide.value;
+        isRunning = true;
+        PrepareRenderer();
+        PrepareMatrixes(matrixSize);
         timer = refreshTime;
         actualMatrix = true;
+    }
+
+    public void PauseGame()
+    {
+        switch (isRunning)
+        {
+            case false:
+                isRunning = true;
+                break;
+            case true:
+                isRunning = false;
+                break;
+        }
     }
 
     //private void ChangeArray(int[,] toChange)
@@ -51,15 +75,15 @@ public class Vitrus_Genenator_2 : MonoBehaviour
     //    toChange[0, 0] = 0;
     //}
 
-    private void PrepareMatrixes()
+    private void PrepareMatrixes(int size)
     {
         // prepare matrix_1
-        matrix_1 = new int[matrixSize, matrixSize];
-        matrix_2 = new int[matrixSize, matrixSize];
+        matrix_1 = new int[size, size];
+        matrix_2 = new int[size, size];
 
-        for (int x = 0; x < matrixSize; x++)
+        for (int x = 0; x < size; x++)
         {
-            for (int y = 0; y < matrixSize; y++)
+            for (int y = 0; y < size; y++)
             {
                 matrix_1[x, y] = UnityEngine.Random.Range(0, 2);
             }
@@ -88,13 +112,14 @@ public class Vitrus_Genenator_2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float refreshModifier = simulationSpeedSlider.value / 100;
         // mit timer
         timer -= Time.deltaTime;
-        if (timer < 0)
+        if (timer < 0 && isRunning)
         {
             SetRenderOutput();
             PlayRound();
-            timer = refreshTime;
+            timer = refreshTime * (1- refreshModifier);
         }
     }
 
@@ -173,4 +198,22 @@ public class Vitrus_Genenator_2 : MonoBehaviour
 
         texture.Apply();
     }
+
+    
+
+    public void SetMatrixSize()
+    {
+        SetMatrixSizeTextValue();
+    }
+
+    public void SetMatrixSizeTextValue()
+    {
+        matrixDimSlideValue.SetText(matrixDimSlide.value.ToString());
+    }
+    
+    public void SetSimulationSpeed()
+    {
+        simulationSpeedSlideValue.SetText(simulationSpeedSlider.value.ToString());
+    }   
+    
 }
