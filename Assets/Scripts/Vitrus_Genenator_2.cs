@@ -43,7 +43,7 @@ public class Vitrus_Genenator_2 : MonoBehaviour
         //set default values of slider
         matrixDimSlide.value = 50;
         simulationSpeedSlider.value = 50;
-        
+
 
     }
 
@@ -119,9 +119,18 @@ public class Vitrus_Genenator_2 : MonoBehaviour
         {
             SetRenderOutput();
             PlayRound();
-            timer = refreshTime * (1- refreshModifier);
+            timer = refreshTime * (1 - refreshModifier);
         }
     }
+
+    // step Button: game will be Paused and every time the step button is clicked the game goes one round further
+    public void gameStepButton(){
+        isRunning = false;
+        SetRenderOutput();
+        PlayRound();
+    }
+
+
 
     private void PlayRound()
     {
